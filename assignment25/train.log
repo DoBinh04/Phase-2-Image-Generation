@@ -1,0 +1,270 @@
+2026-09-20 01:19:27 INFO     Using v1 tokenizer                                                                                                               strategy_sd.py:28
+2026-09-20 01:19:29 INFO     Using DreamBooth method.                                                                                                      train_network.py:937
+                    INFO     prepare images.                                                                                                          dreambooth_dataset.py:274
+                    INFO     get image size from name of cache files                                                                                  dreambooth_dataset.py:149
+                    INFO     set image size from cache files: 0/5                                                                                     dreambooth_dataset.py:179
+                    INFO     found directory /workspace/lora_train/img/10_sks_dog contains 5 image files                                              dreambooth_dataset.py:221
+                    INFO     50 train images with repeats.                                                                                            dreambooth_dataset.py:320
+                    INFO     0 reg images with repeats.                                                                                               dreambooth_dataset.py:324
+                    WARNING  no regularization images / 正則化画像が見つかりませんでした                                                              dreambooth_dataset.py:329
+                    INFO     [Dataset 0]                                                                                                                     config_util.py:587
+                               batch_size: 2                                                                                                                                   
+                               resolution: (512, 512)                                                                                                                          
+                               skip_image_resolution: None                                                                                                                     
+                               resize_interpolation: None                                                                                                                      
+                               enable_bucket: True                                                                                                                             
+                               min_bucket_reso: 256                                                                                                                            
+                               max_bucket_reso: 1024                                                                                                                           
+                               bucket_reso_steps: 64                                                                                                                           
+                               bucket_no_upscale: False                                                                                                                        
+                               [Subset 0 of Dataset 0]                                                                                                                         
+                                 image_dir: "/workspace/lora_train/img/10_sks_dog"                                                                                             
+                                 image_count: 5                                                                                                                                
+                                 num_repeats: 10                                                                                                                               
+                                 shuffle_caption: True                                                                                                                         
+                                 keep_tokens: 1                                                                                                                                
+                                 caption_dropout_rate: 0.0                                                                                                                     
+                                 caption_dropout_every_n_epochs: 0                                                                                                             
+                                 caption_tag_dropout_rate: 0.0                                                                                                                 
+                                 caption_prefix: None                                                                                                                          
+                                 caption_suffix: None                                                                                                                          
+                                 color_aug: False                                                                                                                              
+                                 flip_aug: False                                                                                                                               
+                                 face_crop_aug_range: None                                                                                                                     
+                                 random_crop: False                                                                                                                            
+                                 token_warmup_min: 1,                                                                                                                          
+                                 token_warmup_step: 0,                                                                                                                         
+                                 alpha_mask: False                                                                                                                             
+                                 resize_interpolation: None                                                                                                                    
+                                 custom_attributes: {}                                                                                                                         
+                                 is_reg: False                                                                                                                                 
+                                 class_tokens: sks_dog                                                                                                                         
+                                 caption_extension: .txt                                                                                                                       
+                    INFO     [Prepare dataset 0]                                                                                                             config_util.py:599
+                    INFO     loading image sizes.                                                                                                                dataset.py:623
+                    INFO     make buckets                                                                                                                        dataset.py:646
+                    INFO     number of images (including repeats) / 各bucketの画像枚数（繰り返し回数を含む）                                                     dataset.py:692
+                    INFO     bucket 0: resolution (512, 512), count: 50                                                                                          dataset.py:697
+                    INFO     mean ar error (without repeats): 0.0                                                                                                dataset.py:705
+                    INFO     preparing accelerator                                                                                                        train_network.py:1000
+accelerator device: cuda
+                    INFO     loading model for process 0/1                                                                                                      model_io.py:407
+                    INFO     load StableDiffusion checkpoint: /opt/model_store/v1-5-pruned-emaonly-fp16.safetensors                                             model_io.py:361
+                    INFO     UNet2DConditionModel: 64, 8, 768, False, False                                                                               original_unet.py:1396
+2026-09-20 01:19:37 INFO     loading u-net: <All keys matched successfully>                                                                                  model_util.py:1017
+                    INFO     loading vae: <All keys matched successfully>                                                                                    model_util.py:1025
+2026-09-20 01:19:39 INFO     loading text encoder: <All keys matched successfully>                                                                           model_util.py:1082
+2026-09-20 01:19:40 INFO     Enable SDPA for U-Net                                                                                                              model_io.py:145
+                    INFO     [Dataset 0]                                                                                                                        dataset.py:1311
+                    INFO     caching latents with caching strategy.                                                                                              dataset.py:752
+                    INFO     caching latents...                                                                                                                  dataset.py:802
+import network module: networks.lora
+2026-09-20 01:19:42 INFO     create LoRA network. base dim (rank): 32, alpha: 16.0                                                                                  lora.py:935
+                    INFO     neuron dropout: p=None, rank dropout: p=None, module dropout: p=None                                                                   lora.py:936
+                    INFO     create LoRA for Text Encoder:                                                                                                         lora.py:1030
+                    INFO     create LoRA for Text Encoder: 72 modules.                                                                                             lora.py:1035
+                    INFO     create LoRA for U-Net: 192 modules.                                                                                                   lora.py:1043
+                    INFO     enable LoRA for text encoder: 72 modules                                                                                              lora.py:1084
+                    INFO     enable LoRA for U-Net: 192 modules                                                                                                    lora.py:1089
+prepare optimizer, data loader etc.
+                    INFO     use AdamW optimizer | {}                                                                                                          optimizer.py:305
+running training / 学習開始
+  num train images * repeats / 学習画像の数×繰り返し回数: 50
+  num validation images * repeats / 学習画像の数×繰り返し回数: 0
+  num reg images / 正則化画像の数: 0
+  num batches per epoch / 1epochのバッチ数: 25
+  num epochs / epoch数: 60
+  batch size per device / バッチサイズ: 2
+  gradient accumulation steps / 勾配を合計するステップ数 = 1
+  total optimization steps / 学習ステップ数: 1500
+2026-09-20 01:19:49 INFO     unet dtype: torch.float16, device: cuda:0                                                                                    train_network.py:1519
+                    INFO     text_encoder [0] dtype: torch.float16, device: cuda:0                                                                        train_network.py:1525
+epoch 1/60
+2026-09-20 01:19:50 INFO     epoch is incremented. current_epoch: 0, epoch: 1                                                                                    dataset.py:464
+2026-09-20 01:19:50 INFO     epoch is incremented. current_epoch: 0, epoch: 1                                                                                    dataset.py:464
+epoch 2/60
+2026-09-20 01:20:00 INFO     epoch is incremented. current_epoch: 1, epoch: 2                                                                                    dataset.py:464
+2026-09-20 01:20:00 INFO     epoch is incremented. current_epoch: 1, epoch: 2                                                                                    dataset.py:464
+epoch 3/60
+2026-09-20 01:20:10 INFO     epoch is incremented. current_epoch: 2, epoch: 3                                                                                    dataset.py:464
+2026-09-20 01:20:10 INFO     epoch is incremented. current_epoch: 2, epoch: 3                                                                                    dataset.py:464
+epoch 4/60
+2026-09-20 01:20:21 INFO     epoch is incremented. current_epoch: 3, epoch: 4                                                                                    dataset.py:464
+2026-09-20 01:20:21 INFO     epoch is incremented. current_epoch: 3, epoch: 4                                                                                    dataset.py:464
+epoch 5/60
+2026-09-20 01:20:32 INFO     epoch is incremented. current_epoch: 4, epoch: 5                                                                                    dataset.py:464
+2026-09-20 01:20:32 INFO     epoch is incremented. current_epoch: 4, epoch: 5                                                                                    dataset.py:464
+epoch 6/60
+2026-09-20 01:20:42 INFO     epoch is incremented. current_epoch: 5, epoch: 6                                                                                    dataset.py:464
+2026-09-20 01:20:42 INFO     epoch is incremented. current_epoch: 5, epoch: 6                                                                                    dataset.py:464
+epoch 7/60
+2026-09-20 01:20:53 INFO     epoch is incremented. current_epoch: 6, epoch: 7                                                                                    dataset.py:464
+2026-09-20 01:20:53 INFO     epoch is incremented. current_epoch: 6, epoch: 7                                                                                    dataset.py:464
+epoch 8/60
+2026-09-20 01:21:03 INFO     epoch is incremented. current_epoch: 7, epoch: 8                                                                                    dataset.py:464
+2026-09-20 01:21:03 INFO     epoch is incremented. current_epoch: 7, epoch: 8                                                                                    dataset.py:464
+epoch 9/60
+2026-09-20 01:21:13 INFO     epoch is incremented. current_epoch: 8, epoch: 9                                                                                    dataset.py:464
+2026-09-20 01:21:13 INFO     epoch is incremented. current_epoch: 8, epoch: 9                                                                                    dataset.py:464
+epoch 10/60
+2026-09-20 01:21:24 INFO     epoch is incremented. current_epoch: 9, epoch: 10                                                                                   dataset.py:464
+2026-09-20 01:21:24 INFO     epoch is incremented. current_epoch: 9, epoch: 10                                                                                   dataset.py:464
+epoch 11/60
+2026-09-20 01:21:34 INFO     epoch is incremented. current_epoch: 10, epoch: 11                                                                                  dataset.py:464
+2026-09-20 01:21:34 INFO     epoch is incremented. current_epoch: 10, epoch: 11                                                                                  dataset.py:464
+epoch 12/60
+2026-09-20 01:21:44 INFO     epoch is incremented. current_epoch: 11, epoch: 12                                                                                  dataset.py:464
+2026-09-20 01:21:44 INFO     epoch is incremented. current_epoch: 11, epoch: 12                                                                                  dataset.py:464
+epoch 13/60
+2026-09-20 01:21:55 INFO     epoch is incremented. current_epoch: 12, epoch: 13                                                                                  dataset.py:464
+2026-09-20 01:21:55 INFO     epoch is incremented. current_epoch: 12, epoch: 13                                                                                  dataset.py:464
+epoch 14/60
+2026-09-20 01:22:06 INFO     epoch is incremented. current_epoch: 13, epoch: 14                                                                                  dataset.py:464
+2026-09-20 01:22:06 INFO     epoch is incremented. current_epoch: 13, epoch: 14                                                                                  dataset.py:464
+epoch 15/60
+2026-09-20 01:22:16 INFO     epoch is incremented. current_epoch: 14, epoch: 15                                                                                  dataset.py:464
+2026-09-20 01:22:16 INFO     epoch is incremented. current_epoch: 14, epoch: 15                                                                                  dataset.py:464
+epoch 16/60
+2026-09-20 01:22:26 INFO     epoch is incremented. current_epoch: 15, epoch: 16                                                                                  dataset.py:464
+2026-09-20 01:22:26 INFO     epoch is incremented. current_epoch: 15, epoch: 16                                                                                  dataset.py:464
+epoch 17/60
+2026-09-20 01:22:36 INFO     epoch is incremented. current_epoch: 16, epoch: 17                                                                                  dataset.py:464
+2026-09-20 01:22:36 INFO     epoch is incremented. current_epoch: 16, epoch: 17                                                                                  dataset.py:464
+epoch 18/60
+2026-09-20 01:22:46 INFO     epoch is incremented. current_epoch: 17, epoch: 18                                                                                  dataset.py:464
+2026-09-20 01:22:46 INFO     epoch is incremented. current_epoch: 17, epoch: 18                                                                                  dataset.py:464
+epoch 19/60
+2026-09-20 01:22:56 INFO     epoch is incremented. current_epoch: 18, epoch: 19                                                                                  dataset.py:464
+2026-09-20 01:22:56 INFO     epoch is incremented. current_epoch: 18, epoch: 19                                                                                  dataset.py:464
+epoch 20/60
+2026-09-20 01:23:06 INFO     epoch is incremented. current_epoch: 19, epoch: 20                                                                                  dataset.py:464
+2026-09-20 01:23:06 INFO     epoch is incremented. current_epoch: 19, epoch: 20                                                                                  dataset.py:464
+saving checkpoint: /workspace/lora_train/output/sks_dog_lora-000020.safetensors
+epoch 21/60
+2026-09-20 01:23:16 INFO     epoch is incremented. current_epoch: 20, epoch: 21                                                                                  dataset.py:464
+2026-09-20 01:23:16 INFO     epoch is incremented. current_epoch: 20, epoch: 21                                                                                  dataset.py:464
+epoch 22/60
+2026-09-20 01:23:25 INFO     epoch is incremented. current_epoch: 21, epoch: 22                                                                                  dataset.py:464
+2026-09-20 01:23:25 INFO     epoch is incremented. current_epoch: 21, epoch: 22                                                                                  dataset.py:464
+epoch 23/60
+2026-09-20 01:23:33 INFO     epoch is incremented. current_epoch: 22, epoch: 23                                                                                  dataset.py:464
+2026-09-20 01:23:33 INFO     epoch is incremented. current_epoch: 22, epoch: 23                                                                                  dataset.py:464
+epoch 24/60
+2026-09-20 01:23:42 INFO     epoch is incremented. current_epoch: 23, epoch: 24                                                                                  dataset.py:464
+2026-09-20 01:23:42 INFO     epoch is incremented. current_epoch: 23, epoch: 24                                                                                  dataset.py:464
+epoch 25/60
+2026-09-20 01:23:51 INFO     epoch is incremented. current_epoch: 24, epoch: 25                                                                                  dataset.py:464
+2026-09-20 01:23:51 INFO     epoch is incremented. current_epoch: 24, epoch: 25                                                                                  dataset.py:464
+epoch 26/60
+2026-09-20 01:24:00 INFO     epoch is incremented. current_epoch: 25, epoch: 26                                                                                  dataset.py:464
+2026-09-20 01:24:00 INFO     epoch is incremented. current_epoch: 25, epoch: 26                                                                                  dataset.py:464
+epoch 27/60
+2026-09-20 01:24:08 INFO     epoch is incremented. current_epoch: 26, epoch: 27                                                                                  dataset.py:464
+2026-09-20 01:24:08 INFO     epoch is incremented. current_epoch: 26, epoch: 27                                                                                  dataset.py:464
+epoch 28/60
+2026-09-20 01:24:18 INFO     epoch is incremented. current_epoch: 27, epoch: 28                                                                                  dataset.py:464
+2026-09-20 01:24:18 INFO     epoch is incremented. current_epoch: 27, epoch: 28                                                                                  dataset.py:464
+epoch 29/60
+2026-09-20 01:24:28 INFO     epoch is incremented. current_epoch: 28, epoch: 29                                                                                  dataset.py:464
+2026-09-20 01:24:28 INFO     epoch is incremented. current_epoch: 28, epoch: 29                                                                                  dataset.py:464
+epoch 30/60
+2026-09-20 01:24:38 INFO     epoch is incremented. current_epoch: 29, epoch: 30                                                                                  dataset.py:464
+2026-09-20 01:24:38 INFO     epoch is incremented. current_epoch: 29, epoch: 30                                                                                  dataset.py:464
+epoch 31/60
+2026-09-20 01:24:48 INFO     epoch is incremented. current_epoch: 30, epoch: 31                                                                                  dataset.py:464
+2026-09-20 01:24:48 INFO     epoch is incremented. current_epoch: 30, epoch: 31                                                                                  dataset.py:464
+epoch 32/60
+2026-09-20 01:24:57 INFO     epoch is incremented. current_epoch: 31, epoch: 32                                                                                  dataset.py:464
+2026-09-20 01:24:57 INFO     epoch is incremented. current_epoch: 31, epoch: 32                                                                                  dataset.py:464
+epoch 33/60
+2026-09-20 01:25:05 INFO     epoch is incremented. current_epoch: 32, epoch: 33                                                                                  dataset.py:464
+2026-09-20 01:25:05 INFO     epoch is incremented. current_epoch: 32, epoch: 33                                                                                  dataset.py:464
+epoch 34/60
+2026-09-20 01:25:14 INFO     epoch is incremented. current_epoch: 33, epoch: 34                                                                                  dataset.py:464
+2026-09-20 01:25:14 INFO     epoch is incremented. current_epoch: 33, epoch: 34                                                                                  dataset.py:464
+epoch 35/60
+2026-09-20 01:25:22 INFO     epoch is incremented. current_epoch: 34, epoch: 35                                                                                  dataset.py:464
+2026-09-20 01:25:22 INFO     epoch is incremented. current_epoch: 34, epoch: 35                                                                                  dataset.py:464
+epoch 36/60
+2026-09-20 01:25:30 INFO     epoch is incremented. current_epoch: 35, epoch: 36                                                                                  dataset.py:464
+2026-09-20 01:25:30 INFO     epoch is incremented. current_epoch: 35, epoch: 36                                                                                  dataset.py:464
+epoch 37/60
+2026-09-20 01:25:39 INFO     epoch is incremented. current_epoch: 36, epoch: 37                                                                                  dataset.py:464
+2026-09-20 01:25:39 INFO     epoch is incremented. current_epoch: 36, epoch: 37                                                                                  dataset.py:464
+epoch 38/60
+2026-09-20 01:25:47 INFO     epoch is incremented. current_epoch: 37, epoch: 38                                                                                  dataset.py:464
+2026-09-20 01:25:47 INFO     epoch is incremented. current_epoch: 37, epoch: 38                                                                                  dataset.py:464
+epoch 39/60
+2026-09-20 01:25:56 INFO     epoch is incremented. current_epoch: 38, epoch: 39                                                                                  dataset.py:464
+2026-09-20 01:25:56 INFO     epoch is incremented. current_epoch: 38, epoch: 39                                                                                  dataset.py:464
+epoch 40/60
+2026-09-20 01:26:04 INFO     epoch is incremented. current_epoch: 39, epoch: 40                                                                                  dataset.py:464
+2026-09-20 01:26:04 INFO     epoch is incremented. current_epoch: 39, epoch: 40                                                                                  dataset.py:464
+saving checkpoint: /workspace/lora_train/output/sks_dog_lora-000040.safetensors
+epoch 41/60
+2026-09-20 01:26:13 INFO     epoch is incremented. current_epoch: 40, epoch: 41                                                                                  dataset.py:464
+2026-09-20 01:26:13 INFO     epoch is incremented. current_epoch: 40, epoch: 41                                                                                  dataset.py:464
+epoch 42/60
+2026-09-20 01:26:22 INFO     epoch is incremented. current_epoch: 41, epoch: 42                                                                                  dataset.py:464
+2026-09-20 01:26:22 INFO     epoch is incremented. current_epoch: 41, epoch: 42                                                                                  dataset.py:464
+epoch 43/60
+2026-09-20 01:26:31 INFO     epoch is incremented. current_epoch: 42, epoch: 43                                                                                  dataset.py:464
+2026-09-20 01:26:31 INFO     epoch is incremented. current_epoch: 42, epoch: 43                                                                                  dataset.py:464
+epoch 44/60
+2026-09-20 01:26:39 INFO     epoch is incremented. current_epoch: 43, epoch: 44                                                                                  dataset.py:464
+2026-09-20 01:26:39 INFO     epoch is incremented. current_epoch: 43, epoch: 44                                                                                  dataset.py:464
+epoch 45/60
+2026-09-20 01:26:48 INFO     epoch is incremented. current_epoch: 44, epoch: 45                                                                                  dataset.py:464
+2026-09-20 01:26:48 INFO     epoch is incremented. current_epoch: 44, epoch: 45                                                                                  dataset.py:464
+epoch 46/60
+2026-09-20 01:26:57 INFO     epoch is incremented. current_epoch: 45, epoch: 46                                                                                  dataset.py:464
+2026-09-20 01:26:57 INFO     epoch is incremented. current_epoch: 45, epoch: 46                                                                                  dataset.py:464
+epoch 47/60
+2026-09-20 01:27:05 INFO     epoch is incremented. current_epoch: 46, epoch: 47                                                                                  dataset.py:464
+2026-09-20 01:27:05 INFO     epoch is incremented. current_epoch: 46, epoch: 47                                                                                  dataset.py:464
+epoch 48/60
+2026-09-20 01:27:14 INFO     epoch is incremented. current_epoch: 47, epoch: 48                                                                                  dataset.py:464
+2026-09-20 01:27:14 INFO     epoch is incremented. current_epoch: 47, epoch: 48                                                                                  dataset.py:464
+epoch 49/60
+2026-09-20 01:27:23 INFO     epoch is incremented. current_epoch: 48, epoch: 49                                                                                  dataset.py:464
+2026-09-20 01:27:23 INFO     epoch is incremented. current_epoch: 48, epoch: 49                                                                                  dataset.py:464
+epoch 50/60
+2026-09-20 01:27:31 INFO     epoch is incremented. current_epoch: 49, epoch: 50                                                                                  dataset.py:464
+2026-09-20 01:27:31 INFO     epoch is incremented. current_epoch: 49, epoch: 50                                                                                  dataset.py:464
+epoch 51/60
+2026-09-20 01:27:40 INFO     epoch is incremented. current_epoch: 50, epoch: 51                                                                                  dataset.py:464
+2026-09-20 01:27:40 INFO     epoch is incremented. current_epoch: 50, epoch: 51                                                                                  dataset.py:464
+epoch 52/60
+2026-09-20 01:27:49 INFO     epoch is incremented. current_epoch: 51, epoch: 52                                                                                  dataset.py:464
+2026-09-20 01:27:49 INFO     epoch is incremented. current_epoch: 51, epoch: 52                                                                                  dataset.py:464
+epoch 53/60
+2026-09-20 01:27:57 INFO     epoch is incremented. current_epoch: 52, epoch: 53                                                                                  dataset.py:464
+2026-09-20 01:27:57 INFO     epoch is incremented. current_epoch: 52, epoch: 53                                                                                  dataset.py:464
+epoch 54/60
+2026-09-20 01:28:06 INFO     epoch is incremented. current_epoch: 53, epoch: 54                                                                                  dataset.py:464
+2026-09-20 01:28:06 INFO     epoch is incremented. current_epoch: 53, epoch: 54                                                                                  dataset.py:464
+epoch 55/60
+2026-09-20 01:28:15 INFO     epoch is incremented. current_epoch: 54, epoch: 55                                                                                  dataset.py:464
+2026-09-20 01:28:15 INFO     epoch is incremented. current_epoch: 54, epoch: 55                                                                                  dataset.py:464
+epoch 56/60
+2026-09-20 01:28:24 INFO     epoch is incremented. current_epoch: 55, epoch: 56                                                                                  dataset.py:464
+2026-09-20 01:28:24 INFO     epoch is incremented. current_epoch: 55, epoch: 56                                                                                  dataset.py:464
+epoch 57/60
+2026-09-20 01:28:33 INFO     epoch is incremented. current_epoch: 56, epoch: 57                                                                                  dataset.py:464
+2026-09-20 01:28:33 INFO     epoch is incremented. current_epoch: 56, epoch: 57                                                                                  dataset.py:464
+epoch 58/60
+2026-09-20 01:28:41 INFO     epoch is incremented. current_epoch: 57, epoch: 58                                                                                  dataset.py:464
+2026-09-20 01:28:41 INFO     epoch is incremented. current_epoch: 57, epoch: 58                                                                                  dataset.py:464
+epoch 59/60
+2026-09-20 01:28:50 INFO     epoch is incremented. current_epoch: 58, epoch: 59                                                                                  dataset.py:464
+2026-09-20 01:28:50 INFO     epoch is incremented. current_epoch: 58, epoch: 59                                                                                  dataset.py:464
+epoch 60/60
+2026-09-20 01:28:59 INFO     epoch is incremented. current_epoch: 59, epoch: 60                                                                                  dataset.py:464
+2026-09-20 01:28:59 INFO     epoch is incremented. current_epoch: 59, epoch: 60                                                                                  dataset.py:464
+saving checkpoint: /workspace/lora_train/output/sks_dog_lora.safetensors
+2026-09-20 01:29:08 INFO     model saved.                                                                                                                 train_network.py:1863
+==========================================
+  TRAIN XONG.
+  LoRA output: /workspace/lora_train/output/sks_dog_lora.safetensors
+  Buoc tiep theo: python3 04_generate_samples.py
+==========================================

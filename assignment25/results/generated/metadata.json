@@ -1,0 +1,45 @@
+{
+  "lora_strength": 0.8,
+  "items": [
+    {
+      "file": "gen_00.png",
+      "prompt": "a photo of sks dog running on the beach"
+    },
+    {
+      "file": "gen_01.png",
+      "prompt": "a photo of sks dog wearing a red hat"
+    },
+    {
+      "file": "gen_02.png",
+      "prompt": "a painting of sks dog in the style of van gogh"
+    },
+    {
+      "file": "gen_03.png",
+      "prompt": "a photo of sks dog sleeping on a sofa"
+    },
+    {
+      "file": "gen_04.png",
+      "prompt": "a photo of sks dog in the snow"
+    },
+    {
+      "file": "gen_05.png",
+      "prompt": "a photo of sks dog playing with a ball"
+    },
+    {
+      "file": "gen_06.png",
+      "prompt": "a photo of sks dog in a garden full of flowers"
+    },
+    {
+      "file": "gen_07.png",
+      "prompt": "a professional studio photo of sks dog"
+    },
+    {
+      "file": "gen_08.png",
+      "prompt": "a photo of sks dog swimming in a lake"
+    },
+    {
+      "file": "gen_09.png",
+      "prompt": "a cartoon illustration of sks dog"
+    }
+  ]
+}

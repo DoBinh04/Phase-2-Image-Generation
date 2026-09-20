@@ -1,0 +1,50 @@
+{
+  "repeats": 3,
+  "results": [
+    {
+      "label": "A_baseline_euler30_512px",
+      "runs_sec": [
+        3.61,
+        2.44,
+        2.43
+      ],
+      "median_sec": 2.44,
+      "images": [
+        "bench_A_baseline_00011_.png",
+        "bench_A_baseline_00012_.png",
+        "bench_A_baseline_00013_.png"
+      ],
+      "speedup_vs_baseline": 1.0
+    },
+    {
+      "label": "B_fast_lcm8_freeu_512px",
+      "runs_sec": [
+        2.25,
+        1.02,
+        1.02
+      ],
+      "median_sec": 1.02,
+      "images": [
+        "bench_B_fast_00010_.png",
+        "bench_B_fast_00011_.png",
+        "bench_B_fast_00012_.png"
+      ],
+      "speedup_vs_baseline": 2.39
+    },
+    {
+      "label": "C_full_lcm8_freeu_hires_upscale_1536px",
+      "runs_sec": [
+        6.35,
+        5.68,
+        5.97
+      ],
+      "median_sec": 5.97,
+      "images": [
+        "bench_C_full_00010_.png",
+        "bench_C_full_00011_.png",
+        "bench_C_full_00012_.png"
+      ],
+      "speedup_vs_baseline": 0.41
+    }
+  ]
+}

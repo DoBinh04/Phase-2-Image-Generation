@@ -1,0 +1,248 @@
+{
+  "1": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "v1-5-pruned-emaonly-fp16.safetensors"
+    },
+    "_meta": {
+      "title": "Base SD1.5"
+    }
+  },
+  "2": {
+    "class_type": "LoraLoader",
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "clip": [
+        "1",
+        1
+      ],
+      "lora_name": "sks_dog_lora.safetensors",
+      "strength_model": 0.75,
+      "strength_clip": 0.75
+    },
+    "_meta": {
+      "title": "LoRA: sks dog (da train)"
+    }
+  },
+  "3": {
+    "class_type": "LoraLoader",
+    "inputs": {
+      "model": [
+        "2",
+        0
+      ],
+      "clip": [
+        "2",
+        1
+      ],
+      "lora_name": "lcm-lora-sdv1-5.safetensors",
+      "strength_model": 1.0,
+      "strength_clip": 1.0
+    },
+    "_meta": {
+      "title": "LCM-LoRA (tang toc)"
+    }
+  },
+  "4": {
+    "class_type": "FreeU_V2",
+    "inputs": {
+      "model": [
+        "3",
+        0
+      ],
+      "b1": 1.3,
+      "b2": 1.4,
+      "s1": 0.9,
+      "s2": 0.2
+    },
+    "_meta": {
+      "title": "FreeU_V2 (tang chat luong)"
+    }
+  },
+  "6": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "3",
+        1
+      ],
+      "text": "a professional photo of sks dog sitting in a garden full of flowers, golden hour sunlight, shallow depth of field, highly detailed fur, sharp focus"
+    },
+    "_meta": {
+      "title": "Positive"
+    }
+  },
+  "7": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "3",
+        1
+      ],
+      "text": "blurry, low quality, deformed, extra limbs, bad anatomy, watermark, text"
+    },
+    "_meta": {
+      "title": "Negative"
+    }
+  },
+  "8": {
+    "class_type": "EmptyLatentImage",
+    "inputs": {
+      "width": 512,
+      "height": 512,
+      "batch_size": 1
+    },
+    "_meta": {
+      "title": "Latent 512"
+    }
+  },
+  "9": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": [
+        "4",
+        0
+      ],
+      "positive": [
+        "6",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "latent_image": [
+        "8",
+        0
+      ],
+      "seed": 42,
+      "steps": 8,
+      "cfg": 2.0,
+      "sampler_name": "lcm",
+      "scheduler": "sgm_uniform",
+      "denoise": 1.0
+    },
+    "_meta": {
+      "title": "Pass 1 - LCM 8 steps"
+    }
+  },
+  "10": {
+    "class_type": "LatentUpscale",
+    "inputs": {
+      "samples": [
+        "9",
+        0
+      ],
+      "upscale_method": "nearest-exact",
+      "width": 768,
+      "height": 768,
+      "crop": "disabled"
+    },
+    "_meta": {
+      "title": "Hires: latent 768"
+    }
+  },
+  "11": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": [
+        "4",
+        0
+      ],
+      "positive": [
+        "6",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "latent_image": [
+        "10",
+        0
+      ],
+      "seed": 42,
+      "steps": 6,
+      "cfg": 2.0,
+      "sampler_name": "lcm",
+      "scheduler": "sgm_uniform",
+      "denoise": 0.45
+    },
+    "_meta": {
+      "title": "Pass 2 - hires fix"
+    }
+  },
+  "12": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "11",
+        0
+      ],
+      "vae": [
+        "1",
+        2
+      ]
+    },
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "13": {
+    "class_type": "UpscaleModelLoader",
+    "inputs": {
+      "model_name": "4x-UltraSharp.pth"
+    },
+    "_meta": {
+      "title": "4x-UltraSharp"
+    }
+  },
+  "14": {
+    "class_type": "ImageUpscaleWithModel",
+    "inputs": {
+      "upscale_model": [
+        "13",
+        0
+      ],
+      "image": [
+        "12",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "ESRGAN 4x"
+    }
+  },
+  "15": {
+    "class_type": "ImageScale",
+    "inputs": {
+      "image": [
+        "14",
+        0
+      ],
+      "upscale_method": "lanczos",
+      "width": 1536,
+      "height": 1536,
+      "crop": "disabled"
+    },
+    "_meta": {
+      "title": "Resize 1536"
+    }
+  },
+  "16": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "15",
+        0
+      ],
+      "filename_prefix": "sks_dog"
+    },
+    "_meta": {
+      "title": "Save"
+    }
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "clip_model": "ViT-B-32-quickgelu / openai",
+  "lora_strength": 0.8,
+  "num_real_images": 5,
+  "num_generated_images": 10,
+  "CLIP-I_overall": 0.8837,
+  "CLIP-T_overall": 0.2813,
+  "clip_i_per_image": [
+    {
+      "gen_image": "gen_00.png",
+      "clip_i": 0.8199
+    },
+    {
+      "gen_image": "gen_01.png",
+      "clip_i": 0.8691
+    },
+    {
+      "gen_image": "gen_02.png",
+      "clip_i": 0.8621
+    },
+    {
+      "gen_image": "gen_03.png",
+      "clip_i": 0.9043
+    },
+    {
+      "gen_image": "gen_04.png",
+      "clip_i": 0.9134
+    },
+    {
+      "gen_image": "gen_05.png",
+      "clip_i": 0.9194
+    },
+    {
+      "gen_image": "gen_06.png",
+      "clip_i": 0.8718
+    },
+    {
+      "gen_image": "gen_07.png",
+      "clip_i": 0.9363
+    },
+    {
+      "gen_image": "gen_08.png",
+      "clip_i": 0.8104
+    },
+    {
+      "gen_image": "gen_09.png",
+      "clip_i": 0.9308
+    }
+  ],
+  "clip_t_per_image": [
+    {
+      "gen_image": "gen_00.png",
+      "prompt": "a photo of sks dog running on the beach",
+      "clip_t": 0.2969
+    },
+    {
+      "gen_image": "gen_01.png",
+      "prompt": "a photo of sks dog wearing a red hat",
+      "clip_t": 0.3249
+    },
+    {
+      "gen_image": "gen_02.png",
+      "prompt": "a painting of sks dog in the style of van gogh",
+      "clip_t": 0.314
+    },
+    {
+      "gen_image": "gen_03.png",
+      "prompt": "a photo of sks dog sleeping on a sofa",
+      "clip_t": 0.2515
+    },
+    {
+      "gen_image": "gen_04.png",
+      "prompt": "a photo of sks dog in the snow",
+      "clip_t": 0.2376
+    },
+    {
+      "gen_image": "gen_05.png",
+      "prompt": "a photo of sks dog playing with a ball",
+      "clip_t": 0.2155
+    },
+    {
+      "gen_image": "gen_06.png",
+      "prompt": "a photo of sks dog in a garden full of flowers",
+      "clip_t": 0.3068
+    },
+    {
+      "gen_image": "gen_07.png",
+      "prompt": "a professional studio photo of sks dog",
+      "clip_t": 0.3003
+    },
+    {
+      "gen_image": "gen_08.png",
+      "prompt": "a photo of sks dog swimming in a lake",
+      "clip_t": 0.325
+    },
+    {
+      "gen_image": "gen_09.png",
+      "prompt": "a cartoon illustration of sks dog",
+      "clip_t": 0.2403
+    }
+  ]
+}
