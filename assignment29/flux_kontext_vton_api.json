@@ -1,0 +1,314 @@
+{
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "flux1-dev-kontext_fp8_scaled.safetensors",
+      "weight_dtype": "fp8_e4m3fn"
+    },
+    "_meta": {
+      "title": "Flux Kontext dev (fp8)"
+    }
+  },
+  "2": {
+    "class_type": "DualCLIPLoader",
+    "inputs": {
+      "clip_name1": "clip_l.safetensors",
+      "clip_name2": "t5xxl_fp8_e4m3fn_scaled.safetensors",
+      "type": "flux",
+      "device": "default"
+    },
+    "_meta": {
+      "title": "CLIP-L + T5-XXL"
+    }
+  },
+  "3": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "_meta": {
+      "title": "Flux VAE"
+    }
+  },
+  "4": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "person.png"
+    },
+    "_meta": {
+      "title": "INPUT A - Nguoi mac"
+    }
+  },
+  "5": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "garment.png"
+    },
+    "_meta": {
+      "title": "INPUT B - Trang phuc (nen trang)"
+    }
+  },
+  "6": {
+    "class_type": "ImageScale",
+    "inputs": {
+      "upscale_method": "lanczos",
+      "width": 608,
+      "height": 832,
+      "crop": "center",
+      "image": [
+        "4",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Chuan hoa A -> 608x832"
+    }
+  },
+  "7": {
+    "class_type": "ImageScale",
+    "inputs": {
+      "upscale_method": "lanczos",
+      "width": 608,
+      "height": 832,
+      "crop": "center",
+      "image": [
+        "5",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Chuan hoa B -> 608x832"
+    }
+  },
+  "8": {
+    "class_type": "ImageStitch",
+    "inputs": {
+      "direction": "right",
+      "match_image_size": true,
+      "spacing_width": 0,
+      "spacing_color": "white",
+      "image1": [
+        "6",
+        0
+      ],
+      "image2": [
+        "7",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Ghep canvas doi [A | B] = 1216x832"
+    }
+  },
+  "9": {
+    "class_type": "FluxKontextImageScale",
+    "inputs": {
+      "image": [
+        "8",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Snap ve preferred resolution"
+    }
+  },
+  "10": {
+    "class_type": "VAEEncode",
+    "inputs": {
+      "pixels": [
+        "9",
+        0
+      ],
+      "vae": [
+        "3",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Encode canvas -> latent tham chieu"
+    }
+  },
+  "11": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "Replace the top worn by the person on the left with the garment shown on the right. Keep the person's face, hairstyle, skin tone, body shape, pose, hands, the trousers, the shoes and the background completely unchanged. Match the garment's fabric texture, print placement, logo and color exactly, with natural folds and drape following the body pose, and lighting and shadows consistent with the original scene.",
+      "clip": [
+        "2",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Instruction (co menh de preservation)"
+    }
+  },
+  "12": {
+    "class_type": "ReferenceLatent",
+    "inputs": {
+      "conditioning": [
+        "11",
+        0
+      ],
+      "latent": [
+        "10",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Bom canvas vao conditioning"
+    }
+  },
+  "13": {
+    "class_type": "FluxGuidance",
+    "inputs": {
+      "guidance": 2.5,
+      "conditioning": [
+        "12",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Guidance 2.5"
+    }
+  },
+  "14": {
+    "class_type": "ConditioningZeroOut",
+    "inputs": {
+      "conditioning": [
+        "11",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Negative rong (Flux distilled)"
+    }
+  },
+  "15": {
+    "class_type": "KSampler",
+    "inputs": {
+      "seed": 42,
+      "steps": 20,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0,
+      "model": [
+        "1",
+        0
+      ],
+      "positive": [
+        "13",
+        0
+      ],
+      "negative": [
+        "14",
+        0
+      ],
+      "latent_image": [
+        "10",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Kontext edit - 20 steps / cfg 1.0"
+    }
+  },
+  "16": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "15",
+        0
+      ],
+      "vae": [
+        "3",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Decode"
+    }
+  },
+  "17": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "vton/00_canvas",
+      "images": [
+        "16",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "QA - canvas day du (debug)"
+    }
+  },
+  "18": {
+    "class_type": "ImageCrop",
+    "inputs": {
+      "width": 608,
+      "height": 832,
+      "x": 0,
+      "y": 0,
+      "image": [
+        "16",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Cat nua trai = nguoi da mac do"
+    }
+  },
+  "19": {
+    "class_type": "UpscaleModelLoader",
+    "inputs": {
+      "model_name": "4x-UltraSharp.pth"
+    },
+    "_meta": {
+      "title": "4x-UltraSharp"
+    }
+  },
+  "20": {
+    "class_type": "ImageUpscaleWithModel",
+    "inputs": {
+      "upscale_model": [
+        "19",
+        0
+      ],
+      "image": [
+        "18",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "ESRGAN 4x"
+    }
+  },
+  "21": {
+    "class_type": "ImageScale",
+    "inputs": {
+      "upscale_method": "lanczos",
+      "width": 912,
+      "height": 1248,
+      "crop": "disabled",
+      "image": [
+        "20",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Resize ve 912x1248"
+    }
+  },
+  "22": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "vton/01_tryon",
+      "images": [
+        "21",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "OUTPUT - try-on"
+    }
+  }
+}
